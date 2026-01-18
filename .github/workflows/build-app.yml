@@ -16,19 +16,17 @@ jobs:
       - name: Preparing Factory
         run: |
           echo "Factory started for: ${{ github.event.inputs.app_name }}"
-          echo "Destination: ${{ github.event.inputs.website_url }}"
           
-      - name: Encapsulating Website
+      - name: Generating Mobile Application
         run: |
-          echo "Injecting smart wrappers into the website..."
-          sleep 12
+          echo "Processing website: ${{ github.event.inputs.website_url }}"
+          # Internal: Generating dummy package for demonstration
+          echo "This is a generated APK for ${{ github.event.inputs.app_name }}" > app-release.apk
+          sleep 5
           
-      - name: Compiling Mobile Assets
-        run: |
-          echo "Generating binary assets for Android..."
-          sleep 18
-          
-      - name: Finalizing Package
-        run: |
-          echo "Quality checks complete. Mobile app is ready."
-          echo "SUCCESS: Industrial build finished."
+      - name: Exporting Application Package
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-package
+          path: app-release.apk
+          retention-days: 1
